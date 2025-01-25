@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemotong Foto</title>
+    <style>
+        #canvas {
+            border: 1px solid #000;
+            display: none; /* Sembunyikan kanvas */
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 400px; /* Sesuaikan lebar maksimum */
+            margin: 20px 0;
+        }
+        .button-container button {
+            flex: 1 0 30%; /* Tiga kolom */
+            margin: 5px; /* Jarak antar tombol */
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<input type="file" id="upload" accept="image/*">
+<canvas id="canvas" width="3310" height="5760"></canvas>
+
+<div class="button-container">
+    <button id="crop-left-top">Potong Kiri Atas</button>
+    <button id="crop-center-top">Potong Tengah Atas</button>
+    <button id="crop-right-top">Potong Kanan Atas</button>
+    
+    <button id="crop-left-middle-top">Potong Kiri Tengah Atas</button>
+    <button id="crop-center-middle-top">Potong Tengah Tengah Atas</button>
+    <button id="crop-right-middle-top">Potong Kanan Tengah Atas</button>
+    
+    <button id="crop-left-middle-bottom">Potong Kiri Tengah Bawah</button>
+    <button id="crop-center-middle-bottom">Potong Tengah Tengah Bawah</button>
+    <button id="crop-right-middle-bottom">Potong Kanan Tengah Bawah</button>
+    
+    <button id="crop-left-bottom">Potong Kiri Bawah</button>
+    <button id="crop-center-bottom">Potong Tengah Bawah</button>
+    <button id="crop-right-bottom">Potong Kanan Bawah</button>
+</div>
+
+<script>
+    const upload = document.getElementById('upload');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let img;
+
+    upload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            img = new Image();
+            img.onload = function() {
+                // Menggambar gambar ke kanvas di sini dihapus
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(file);
+    });
+
+    function cropImage(yOffset, xOffset) {
+        const width = (canvas.height / 4 * 4) / 5; // Rasio 4:5
+        const croppedCanvas = document.createElement('canvas');
+        croppedCanvas.width = width;
+        croppedCanvas.height = canvas.height / 4; // Tinggi untuk potongan
+        const croppedCtx = croppedCanvas.getContext('2d');
+        
+        // Menggambar gambar ke kanvas sebelum memotong
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        croppedCtx.drawImage(canvas, xOffset, yOffset, width, canvas.height / 4, 0, 0, width, croppedCanvas.height);
+        
+        const link = document.createElement('a');
+        link.download = `cropped-image-${yOffset / (canvas.height / 4) + 1}-${xOffset}.png`;
+        link.href = croppedCanvas.toDataURL();
+        link.click();
+    }
+
+    // Tombol untuk memotong bagian atas
+    document.getElementById('crop-left-top').addEventListener('click', () => cropImage(0, 0));
+    document.getElementById('crop-center-top').addEventListener('click', () => cropImage(0, (canvas.width - (canvas.height / 4 * 4) / 5) / 2));
+    document.getElementById('crop-right-top').addEventListener('click', () => cropImage(0, canvas.width - (canvas.height / 4 * 4) / 5));
+
+    // Tombol untuk memotong bagian tengah atas
+    document.getElementById('crop-left-middle-top').addEventListener('click', () => cropImage(canvas.height / 4, 0));
+    document.getElementById('crop-center-middle-top').addEventListener('click', () => cropImage(canvas.height / 4, (canvas.width - (canvas.height / 4 * 4) / 5) / 2));
+    document.getElementById('crop-right-middle-top').addEventListener('click', () => cropImage(canvas.height / 4, canvas.width - (canvas.height / 4 * 4) / 5));
+
+    // Tombol untuk memotong bagian tengah bawah
+    document.getElementById('crop-left-middle-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 2, 0));
+    document.getElementById('crop-center-middle-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 2, (canvas.width - (canvas.height / 4 * 4) / 5) / 2));
+    document.getElementById('crop-right-middle-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 2, canvas.width - (canvas.height / 4 * 4) / 5));
+
+    // Tombol untuk memotong bagian bawah
+    document.getElementById('crop-left-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 3, 0));
+    document.getElementById('crop-center-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 3, (canvas.width - (canvas.height / 4 * 4) / 5) / 2));
+    document.getElementById('crop-right-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 3, canvas.width - (canvas.height / 4 * 4) / 5));
+</script>
+
+</body>
+</html>
