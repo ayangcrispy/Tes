@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3x4</title>
+    <style>
+        html, body {
+            height: 100%; /* Mengatur tinggi html dan body menjadi 100% */
+            margin: 0; /* Menghapus margin default */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        body {
+            font-family: 'Courier New', Courier, monospace; /* Menerapkan font Courier New */
+            text-align: center; /* Rata tengah */
+        }
+        #canvas {
+            border: 1px solid #000;
+            width: 90%; /* Mengubah lebar canvas menjadi 90% dari body */
+            height: auto;
+            margin-top: 20px; /* Menambahkan jarak antara upload dan kanvas */
+            cursor: pointer; /* Menunjukkan bahwa kanvas dapat diklik */
+        }
+        #upload {
+            display: none; /* Menyembunyikan input file */
+        }
+        button {
+            margin: 0px; /* Jarak antar tombol */
+            padding: 10px 20px; /* Ukuran tombol */
+            font-family: 'Courier New', Courier, monospace; /* Menerapkan font pada tombol */
+            cursor: pointer; /* Mengubah pointer saat hover */
+        }
+        button:hover {
+            background-color: #555; /* Warna latar belakang tombol saat hover */
+        }
+        #button-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+            gap: 10px; /* Jarak antar tombol */
+            margin-top: 20px;
+        }
+        footer {
+            margin-top: auto; /* Memastikan footer berada di bagian bawah */
+            padding: 10px;
+            background-color: #f1f1f1; /* Warna latar belakang footer */
+            width: 100%; /* Lebar footer sama dengan body */
+        }
+    </style>
+</head>
+<body>
+
+<h1>Pilih Halaman</h1>
+<input type="file" id="upload" accept="image/*">
+<canvas id="canvas" width="3103.125" height="5400"></canvas>
+
+<div id="button-container">
+    <button id="crop-left-top">12</button>
+    <button id="crop-center-top">11</button>
+    <button id="crop-right-top">10</button>
+    <button id="crop-left-middle-top">9</button>
+    <button id="crop-center-middle-top">8</button>
+    <button id="crop-right-middle-top">7</button>
+    <button id="crop-left-middle-bottom">6</button>
+    <button id="crop-center-middle-bottom">5</button>
+    <button id="crop-right-middle-bottom">4</button>
+    <button id="crop-left-bottom">3</button>
+    <button id="crop-center-bottom">2</button>
+    <button id="crop-right-bottom">1</button>
+</div>
+
+<script>
+    const upload = document.getElementById('upload');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let img;
+
+    // Array untuk urutan angka terbalik
+    const reverseOrder = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+    // Fungsi untuk memuat gambar ke kanvas
+    upload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            img = new Image();
+            img.onload = function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(file);
+    });
+
+    // Menambahkan event listener klik pada kanvas
+    canvas.addEventListener('click', () => {
+        upload.click(); // Memicu klik pada input file
+    });
+
+    function cropImage(yOffset, xOffset, buttonIndex) {
+        const width = (canvas.height / 4 * 4) / 5; // Rasio 4:5
+        const croppedCanvas = document.createElement('canvas');
+        croppedCanvas.width = width;
+        croppedCanvas.height = canvas.height / 4; // Tinggi untuk potongan
+        const croppedCtx = croppedCanvas.getContext('2d');
+        
+        croppedCtx.drawImage(canvas, xOffset, yOffset, width, canvas.height / 4, 0, 0, width, croppedCanvas.height);
+        
+        // Menggunakan buttonIndex untuk menentukan nama file
+        const link = document.createElement('a');
+        link.download = `crop-${reverseOrder[buttonIndex]}.png`; // Mengubah nama file
+        link.href = croppedCanvas.toDataURL();
+        link.click();
+    }
+
+    // Tombol untuk memotong bagian atas
+    document.getElementById('crop-left-top').addEventListener('click', () => cropImage(0, 0, 0));
+    document.getElementById('crop-center-top').addEventListener('click', () => cropImage(0, (canvas.width - (canvas.height / 4 * 4) / 5) /2 ,1));
+    document.getElementById('crop-right-top').addEventListener('click', () => cropImage(0 , canvas.width - (canvas.height/4*4)/5 ,2));
+
+    // Tombol untuk memotong bagian tengah atas
+    document.getElementById('crop-left-middle-top').addEventListener('click', () => cropImage(canvas.height /4 ,0 ,3));
+    document.getElementById('crop-center-middle-top').addEventListener('click', () => cropImage(canvas.height /4 ,(canvas.width - (canvas.height/4*4)/5)/2 ,4));
+    document.getElementById('crop-right-middle-top').addEventListener('click', () => cropImage(canvas.height /4 , canvas.width - (canvas.height/4*4)/5 ,5));
+
+    // Tombol untuk memotong bagian tengah bawah
+    document.getElementById('crop-left-middle-bottom').addEventListener('click', () => cropImage((canvas.height /4)*2 ,0 ,6));
+    document.getElementById('crop-center-middle-bottom').addEventListener('click', () => cropImage((canvas.height/4)*2 ,(canvas.width - (canvas.height/4*4)/5)/2 ,7));
+    document.getElementById('crop-right-middle-bottom').addEventListener('click', () => cropImage((canvas.height/4)*2 , canvas.width - (canvas.height/4*4)/5 ,8));
+
+    // Tombol untuk memotong bagian bawah
+    document.getElementById('crop-left-bottom').addEventListener('click', () => cropImage((canvas.height/4)*3 ,0 ,9));
+    document.getElementById('crop-center-bottom').addEventListener('click', () => cropImage((canvas.height/4)*3 ,(canvas.width - (canvas.height/4*4)/5)/2 ,10));
+    document.getElementById('crop-right-bottom').addEventListener('click', () => cropImage((canvas.height/4)*3 , canvas.width - (canvas.height/4*4)/5 ,11));
+</script>
+
+<footer>
+    &copy; 2025 Nama Anda. Semua hak dilindungi.
+</footer>
+
+</body>
+</html>
