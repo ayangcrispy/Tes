@@ -25,32 +25,85 @@
 </head>
 <body>
 
+<h2>Pilih Grid Potongan</h2>
+<select id="gridSelector">
+    <option value="1">Grid 3x1</option>
+    <option value="2">Grid 3x2</option>
+    <option value="3">Grid 3x3</option>
+    <option value="4">Grid 3x4</option>
+</select>
+
 <input type="file" id="upload" accept="image/*">
 <canvas id="canvas" width="3310" height="5760"></canvas>
 
-<div class="button-container">
-    <button id="crop-left-top">Potong Kiri Atas</button>
-    <button id="crop-center-top">Potong Tengah Atas</button>
-    <button id="crop-right-top">Potong Kanan Atas</button>
-    
-    <button id="crop-left-middle-top">Potong Kiri Tengah Atas</button>
-    <button id="crop-center-middle-top">Potong Tengah Tengah Atas</button>
-    <button id="crop-right-middle-top">Potong Kanan Tengah Atas</button>
-    
-    <button id="crop-left-middle-bottom">Potong Kiri Tengah Bawah</button>
-    <button id="crop-center-middle-bottom">Potong Tengah Tengah Bawah</button>
-    <button id="crop-right-middle-bottom">Potong Kanan Tengah Bawah</button>
-    
-    <button id="crop-left-bottom">Potong Kiri Bawah</button>
-    <button id="crop-center-bottom">Potong Tengah Bawah</button>
-    <button id="crop-right-bottom">Potong Kanan Bawah</button>
+<div class="button-container" id="buttonContainer">
+    <!-- Tombol potong akan ditambahkan di sini -->
 </div>
 
 <script>
     const upload = document.getElementById('upload');
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    const buttonContainer = document.getElementById('buttonContainer');
     let img;
+    let gridType = 1;
+
+    // Fungsi untuk memperbarui tombol potong berdasarkan grid yang dipilih
+    function updateCropButtons() {
+        buttonContainer.innerHTML = ''; // Kosongkan tombol sebelumnya
+        if (gridType === "1") {
+            buttonContainer.innerHTML += `
+                <button onclick="cropImage(0, 0)">Potong Kiri (1)</button>
+                <button onclick="cropImage(0, (canvas.width - (canvas.height / 4 * 4) / 5) / 2)">Potong Tengah (1)</button>
+                <button onclick="cropImage(0, canvas.width - (canvas.height / 4 * 4) / 5)">Potong Kanan (1)</button>
+            `;
+        } else if (gridType === "2") {
+            buttonContainer.innerHTML += `
+                <button onclick="cropImage(0, 0)">Potong Kiri Atas (2)</button>
+                <button onclick="cropImage(0, (canvas.width - (canvas.height / 4 * 4) / 5) / 2)">Potong Tengah Atas (2)</button>
+                <button onclick="cropImage(0, canvas.width - (canvas.height / 4 * 4) / 5)">Potong Kanan Atas (2)</button>
+                <button onclick="cropImage(canvas.height / 2, 0)">Potong Kiri Bawah (2)</button>
+                <button onclick="cropImage(canvas.height / 2, (canvas.width - (canvas.height / 4 * 4) / 5) / 2)">Potong Tengah Bawah (2)</button>
+                <button onclick="cropImage(canvas.height / 2, canvas.width - (canvas.height / 4 * 4) / 5)">Potong Kanan Bawah (2)</button>
+            `;
+        } else if (gridType === "3") {
+            buttonContainer.innerHTML += `
+                <button onclick="cropImage(0, 0)">Potong Kiri Atas (3)</button>
+                <button onclick="cropImage(0, (canvas.width - (canvas.height / 4 * 4) / 5) / 2)">Potong Tengah Atas (3)</button>
+                <button onclick="cropImage(0, canvas.width - (canvas.height / 4 * 4) / 5)">Potong Kanan Atas (3)</button>
+                <button onclick="cropImage(canvas.height / 3, 0)">Potong Kiri Tengah (3)</button>
+                <button onclick="cropImage(canvas.height / 3, (canvas.width - (canvas.height / 4 * 4) /5)/2)">Potong Tengah Tengah (3)</button>
+                <button onclick="cropImage(canvas.height /3 , canvas.width - ( canvas.height/4*4)/5 )">Potong Kanan Tengah (3)</button>
+                <button onclick="cropImage((canvas.height /3 )*2 ,0)">Potong Kiri Bawah (3)</button>
+                <button onclick="cropImage((canvas.height/3)*2 ,( canvas.width-( canvas.height/4*4)/5)/2 )"> Potong Tengah Bawah (3)</button> 
+                <button onclick="cropImage((canvas.height/3)*2 , canvas.width - ( canvas.height/4*4)/5 )"> Potong Kanan Bawah (3)</button> 
+            `;
+        } else if (gridType === "4") {
+            buttonContainer.innerHTML += `
+                <button onclick="cropImage(0,0)">Potong Kiri Atas (4)</button>
+                <button onclick="cropImage(0,(canvas.width-(canvas.height/4*4)/5)/2)">Potong Tengah Atas (4)</button>
+                <button onclick="cropImage(0, canvas.width-(canvas.height/4*4)/5)">Potong Kanan Atas (4)</button> 
+                
+                <button onclick="cropImage(canvas.height/4 ,0)">Potong Kiri Tengah Atas (4)</ button> 
+                < button onclick = " cropImage(canvas.height/4 ,( canvas.width-( canvas.height/4*4)/5)/2 ) "> Potong Tengah Tengah Atas (4)</ button> 
+                < button onclick = " cropImage(canvas.height/4 , canvas.width-( canvas.height/4*4)/5 ) "> Potong Kanan Tengah Atas (4)</ button> 
+                
+                < button onclick = " cropImage(( canvas.height/4)*2 ,0 ) "> Potong Kiri Tengah Bawah (4)</ button> 
+                < button onclick = " cropImage(( canvas.height/4)*2 ,( canvas.width-( canvas.height/4*4)/5)/2 ) "> Potong Tengah Tengah Bawah (4)</ button> 
+                < button onclick = " cropImage(( canvas.height/4)*2 , canvas.width-( canvas.height/4*4)/5 ) "> Potong Kanan Tengah Bawah (4)</ button> 
+                
+                < button onclick = " cropImage(( canvas.height/4)*3 ,0 ) "> Potong Kiri Bawah (4)</ button> 
+                < button onclick = " cropImage(( canvas.height/4)*3 ,( canvas.width-( canvas.height/4*4)/5)/2 ) "> Potong Tengah Bawah (4)</ button> 
+                < button onclick = " cropImage(( canvas.height/4)*3 , canvas.width-( canvas.height/4*4)/5 ) "> Potong Kanan Bawah (4)</ button> 
+            `;
+        }
+    }
+
+    // Mengubah grid type saat pilihan berubah
+    document.getElementById('gridSelector').addEventListener('change', function() {
+        gridType = this.value;
+        updateCropButtons();
+    });
 
     upload.addEventListener('change', (e) => {
         const file = e.target.files[0];
@@ -58,9 +111,8 @@
         reader.onload = function(event) {
             img = new Image();
             img.onload = function() {
-                // Menggambar gambar ke kanvas di sini dihapus
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                ctx.clearRect(0,0, canvas.width, canvas.height);
+                ctx.drawImage(img,0 ,0 , canvas.width , canvas.height);
             }
             img.src = event.target.result;
         }
@@ -68,43 +120,23 @@
     });
 
     function cropImage(yOffset, xOffset) {
-        const width = (canvas.height / 4 * 4) / 5; // Rasio 4:5
+        const width = (canvas.height / gridType * gridType) /5; // Rasio potongan
         const croppedCanvas = document.createElement('canvas');
         croppedCanvas.width = width;
-        croppedCanvas.height = canvas.height / 4; // Tinggi untuk potongan
+        croppedCanvas.height = canvas.height/gridType; // Tinggi untuk potongan
         const croppedCtx = croppedCanvas.getContext('2d');
-        
-        // Menggambar gambar ke kanvas sebelum memotong
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        croppedCtx.drawImage(canvas, xOffset, yOffset, width, canvas.height / 4, 0, 0, width, croppedCanvas.height);
-        
+        croppedCtx.drawImage(canvas,xOffset,yOffset,width,croppedCanvas.height ,0 ,0,width,croppedCanvas.height);
+
         const link = document.createElement('a');
-        link.download = `cropped-image-${yOffset / (canvas.height / 4) + 1}-${xOffset}.png`;
+        link.download = `cropped-image-${yOffset/(canvas.height/gridType)+1}-${xOffset}.png`;
         link.href = croppedCanvas.toDataURL();
         link.click();
     }
 
-    // Tombol untuk memotong bagian atas
-    document.getElementById('crop-left-top').addEventListener('click', () => cropImage(0, 0));
-    document.getElementById('crop-center-top').addEventListener('click', () => cropImage(0, (canvas.width - (canvas.height / 4 * 4) / 5) / 2));
-    document.getElementById('crop-right-top').addEventListener('click', () => cropImage(0, canvas.width - (canvas.height / 4 * 4) / 5));
+    // Inisialisasi tombol potongan pada load pertama
+    updateCropButtons();
 
-    // Tombol untuk memotong bagian tengah atas
-    document.getElementById('crop-left-middle-top').addEventListener('click', () => cropImage(canvas.height / 4, 0));
-    document.getElementById('crop-center-middle-top').addEventListener('click', () => cropImage(canvas.height / 4, (canvas.width - (canvas.height / 4 * 4) / 5) / 2));
-    document.getElementById('crop-right-middle-top').addEventListener('click', () => cropImage(canvas.height / 4, canvas.width - (canvas.height / 4 * 4) / 5));
-
-    // Tombol untuk memotong bagian tengah bawah
-    document.getElementById('crop-left-middle-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 2, 0));
-    document.getElementById('crop-center-middle-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 2, (canvas.width - (canvas.height / 4 * 4) / 5) / 2));
-    document.getElementById('crop-right-middle-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 2, canvas.width - (canvas.height / 4 * 4) / 5));
-
-    // Tombol untuk memotong bagian bawah
-    document.getElementById('crop-left-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 3, 0));
-    document.getElementById('crop-center-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 3, (canvas.width - (canvas.height / 4 * 4) / 5) / 2));
-    document.getElementById('crop-right-bottom').addEventListener('click', () => cropImage((canvas.height / 4) * 3, canvas.width - (canvas.height / 4 * 4) / 5));
 </script>
 
 </body>
