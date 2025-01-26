@@ -1,41 +1,124 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tampilan Web dengan Window Open</title>
+    <title>3x1</title>
     <style>
+        html, body {
+            height: 100%; /* Mengatur tinggi html dan body menjadi 100% */
+            margin: 0; /* Menghapus margin default */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         body {
             font-family: 'Courier New', Courier, monospace; /* Menerapkan font Courier New */
-            
             text-align: center; /* Rata tengah */
-            padding: 20px; /* Jarak dalam */
+        }
+        #canvas {
+        	background-color: #f1f1f1; 
+            border: 4px solid #555;
+            width: 68%; /* Mengubah lebar canvas menjadi 90% dari body */
+            height: auto;
+            margin-top: 0px; /* Menambahkan jarak antara upload dan kanvas */
+            margin-bottom: 20px; 
+            cursor: pointer; /* Menunjukkan bahwa kanvas dapat diklik */
+        }
+        #upload {
+            display: none; /* Menyembunyikan input file */
         }
         button {
-            margin: 10px; /* Jarak antar tombol */
-            padding: 10px 20px; /* Ukuran tombol */
+        	border: 2px solid #555;
+            margin: 0px; /* Jarak antar tombol */
+            padding: 36px 30px; /* Ukuran tombol */
             font-family: 'Courier New', Courier, monospace; /* Menerapkan font pada tombol */
-            
             cursor: pointer; /* Mengubah pointer saat hover */
         }
         button:hover {
             background-color: #555; /* Warna latar belakang tombol saat hover */
         }
+        #button-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 3 kolom */
+            gap: -0px; /* Jarak antar tombol */
+            margin-top: 0px;
+            margin-bottom: 40px; /* Memastikan footer berada di bagian bawah */
+        }
+        footer {
+            margin-top: auto; /* Memastikan footer berada di bagian bawah */
+            padding: 10px;
+            background-color: #f1f1f1; /* Warna latar belakang footer */
+            width: 101%; /* Lebar footer sama dengan body */
+        }
+        
+        
+        
+        .slider-container {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slider-container button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .output {
+            font-size: 18px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <h1>Pilih Halaman</h1>
-    
-    <button onclick="openPage('3x1.html')">Grid 3x1</button>
-    <button onclick="openPage('3x2.html')">Grid 3×2</button>
-    <button onclick="openPage('3x3.html')">Grid 3×3</button>
-    <button onclick="openPage('3x4.html')">Grid 3×4</button>
+
+<h1>GRID MAKER IG<br/>       2025</h1>
+
+
+<h3>Pilih ukuran grid</h3>
+
+
+<div id="button-container">
+    <button onclick="openPage('3x1.html')">3x1</button>
+    <button onclick="openPage('3x2.html')">3x2</button>
+    <button onclick="openPage('3x3.html')">3x3</button>
+    <button onclick="openPage('3x4.html')">3x4</button>
+</div>
+
+
+
+
+
+
+
+
+<p style="opacity: 0;">Upload gambar dengan ukuran lebar ≥3.240 pixel ya, dan sesuaikan rasio nya di bawah ini.</p>
+
+
+
+
+
+
+
+
+
+
+
+<p style="opacity: 0;">Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri</a>
+</p>
+<footer>
+    &copy; 2025 • Arif Fikri • Versi 1.0
+</footer>
+
+
+
 
     <script>
         function openPage(page) {
             window.open(page, '_blank');
         }
     </script>
+
 </body>
 </html>
