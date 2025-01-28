@@ -135,7 +135,7 @@ button {
     padding: 10px; 
     width: 96%; 
     position: fixed;
-    bottom: 0; 
+    bottom: 5px; 
     background-color: var(--color-primary); /* Latar belakang menggunakan variabel warna*/
     
 }
