@@ -26,7 +26,7 @@ header {
 	margin-right:10px ;
     margin-left:10px ;
     position: fixed; /* Membuat header tetap di atas saat di-scroll */
-    top: 2;
+    top: 5px;
     left: 0;
     right: 0;
     background-color: var(--color-primary); /* Menggunakan variabel warna untuk latar belakang header */
