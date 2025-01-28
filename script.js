@@ -538,35 +538,16 @@ function downloadImage(imageSrc, fileName) {
 
 
 function openTab(tab) {
-    // Hide all tabs
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        // Hide all tabs
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
 
-    // Show the selected tab
-    document.getElementById(tab).classList.add('active');
+        // Show the selected tab
+        document.getElementById(tab).classList.add('active');
 
-    // Update active link
-    document.querySelectorAll('.tab-links').forEach(link => link.classList.remove('active'));
-    document.querySelector(`.tab-links[onclick="openTab('${tab}')"]`).classList.add('active');
-
-    // Update header text based on the active tab
-    const headerElement = document.querySelector('header h1'); // Select the header element
-    switch (tab) {
-        case 'tab1':
-            headerElement.textContent = 'GRID MAKER 3x1';
-            break;
-        case 'tab2':
-            headerElement.textContent = 'GRID MAKER 3x2';
-            break;
-        case 'tab3':
-            headerElement.textContent = 'GRID MAKER 3x3';
-            break;
-        case 'tab4':
-            headerElement.textContent = 'GRID MAKER 3x4';
-            break;
-        default:
-            headerElement.textContent = 'GRID MAKER'; // Fallback if no tab matches
+        // Update active link
+        document.querySelectorAll('.tab-links').forEach(link => link.classList.remove('active'));
+        document.querySelector(`.tab-links[onclick="openTab('${tab}')"]`).classList.add('active');
     }
-}
 
-// Open the first tab by default
-openTab('tab1');
+    // Open the first tab by default
+    openTab('tab1');
