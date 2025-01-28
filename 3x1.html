@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3x1</title>
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    body {
+        font-family: 'Courier New', Courier, monospace;
+        text-align: center;
+    }
+    #canvas {
+        background-color: #f1f1f1; 
+        border: 4px solid #555;
+        width: 68%;
+        height: auto;
+        margin-top: 0px;
+        margin-bottom: 20px; 
+        cursor: pointer;
+    }
+    #upload {
+        display: none;
+    }
+    button {
+        border: 2px solid #555;
+        margin: 0px; 
+        padding: 36px 30px; 
+        font-family: 'Courier New', Courier, monospace;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #555; 
+    }
+    #button-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: -0px; 
+        margin-top: 0px;
+        margin-bottom: 40px; 
+    }
+    footer {
+        margin-top: auto; 
+        padding: 10px;
+        background-color: #f1f1f1; 
+        width: 100%; 
+    }
+    
+    .slider-container {
+        margin: 30px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .slider-container button {
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .output {
+        font-size: 18px;
+        margin-top: 0px;
+    }
+</style>
+
+</head>
+<body>
+
+<h1>GRID MAKER IG<br/>3x1</h1>
+<input type="file" id="upload" accept="image/*">
+
+
+
+<h3>Rekomendasi Unggahan</h3>
+<p style="opacity: 1; margin: 0px 30px;">Untuk hasil yang optimal, silakan unggah gambar dengan lebar minimal ≥3240 piksel. Anda bisa cari ukuran yang pas untuk desain anda di bawah ini.</p>
+
+<div class="slider-container">
+    <button id="decrease-button">-</button>
+    <input type="range" id="width-slider" min="3240" max="32400" value="3240" step="10">
+    <button id="increase-button">+</button>
+</div>
+
+<div class="output">
+    <p>Width: <span id="width-value">3240</span></p>
+    <p>Height: <span id="height-value">1862</span></p>
+</div>
+
+
+
+<h3>Unggah gambar di bawah ini :)</h3>
+<canvas id="canvas" width="3103.125" height="1350"></canvas>
+
+<h3>Unduh di sini ;)</h3>
+<div id="button-container">
+    <button id="crop-left">3</button>
+    <button id="crop-center">2</button>
+    <button id="crop-right">1</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    const upload = document.getElementById('upload');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let img;
+
+    // Array untuk urutan angka terbalik
+    const reverseOrder = [3, 2, 1];
+
+    // Fungsi untuk memuat gambar ke kanvas
+    upload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            img = new Image();
+            img.onload = function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(file);
+    });
+
+    // Menambahkan event listener klik pada kanvas
+    canvas.addEventListener('click', () => {
+        upload.click(); // Memicu klik pada input file
+    });
+
+    function cropImage(x, buttonIndex) {
+        const width = (canvas.height * 4) / 5; // Rasio 4:5
+        const croppedCanvas = document.createElement('canvas');
+        croppedCanvas.width = width;
+        croppedCanvas.height = canvas.height;
+        const croppedCtx = croppedCanvas.getContext('2d');
+        
+        croppedCtx.drawImage(canvas, x, 0, width, canvas.height, 0, 0, width, canvas.height);
+        
+        const link = document.createElement('a');
+        link.download = `crop-${reverseOrder[buttonIndex]}.png`; // Mengubah nama file
+        link.href = croppedCanvas.toDataURL();
+        link.click();
+    }
+
+    document.getElementById('crop-left').addEventListener('click', () => cropImage(0, 0));
+    
+    document.getElementById('crop-center').addEventListener('click', () => {
+        const centerX = (canvas.width - (canvas.height * 4) / 5) / 2; // Menghitung posisi tengah
+        cropImage(centerX, 1);
+    });
+    
+    document.getElementById('crop-right').addEventListener('click', () => {
+        cropImage(canvas.width - (canvas.height * 4) / 5, 2);
+    });
+
+    console.log("Script Halaman 1");
+    
+    
+    
+    
+    
+    
+    
+        const widthSlider = document.getElementById('width-slider');
+    const widthValue = document.getElementById('width-value');
+    const heightValue = document.getElementById('height-value');
+    const decreaseButton = document.getElementById('decrease-button');
+    const increaseButton = document.getElementById('increase-button');
+
+    const ratio = 0.4350453172; // Rasio height terhadap width
+
+    // Fungsi untuk memperbarui nilai width dan height
+    function updateValues() {
+        const width = parseFloat(widthSlider.value);
+        const height = Math.round(width * ratio); // Menggunakan perkalian untuk menghitung tinggi
+        
+        widthValue.textContent = width;
+        heightValue.textContent = height;
+    }
+
+    // Event listener untuk slider
+    widthSlider.addEventListener('input', updateValues);
+
+    // Event listener untuk tombol kurang
+    decreaseButton.addEventListener('click', () => {
+        let currentValue = parseInt(widthSlider.value);
+        if (currentValue > parseInt(widthSlider.min)) {
+            currentValue -= 10; // Mengurangi lebar sebesar 10
+            widthSlider.value = currentValue; // Set nilai slider
+            updateValues(); // Update tampilan nilai
+        }
+    });
+
+    // Event listener untuk tombol tambah
+    increaseButton.addEventListener('click', () => {
+        let currentValue = parseInt(widthSlider.value);
+        if (currentValue < parseInt(widthSlider.max)) {
+            currentValue += 10; // Menambah lebar sebesar 10
+            widthSlider.value = currentValue; // Set nilai slider
+            updateValues(); // Update tampilan nilai
+        }
+    });
+
+    // Inisialisasi nilai awal
+    updateValues();
+    
+    
+    
+    
+    
+    
+</script>
+<p style="opacity: 0;">Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri Arif Fikri</a>
+</p>
+<footer>
+    &copy; 2025 • Arif Fikri • Versi 1.0
+</footer>
+
+</body>
+</html>
