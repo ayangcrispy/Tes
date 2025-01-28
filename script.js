@@ -1,3 +1,21 @@
+   if ('serviceWorker' in navigator) {
+       window.addEventListener('load', () => {
+           navigator.serviceWorker.register('/service-worker.js').then(registration => {
+               console.log('Service Worker registered with scope:', registration.scope);
+           }).catch(error => {
+               console.error('Service Worker registration failed:', error);
+           });
+       });
+   }
+
+
+
+
+
+
+
+
+
 
 const upload1 = document.getElementById('upload-1');
 const canvas1 = document.getElementById('canvas-1');
