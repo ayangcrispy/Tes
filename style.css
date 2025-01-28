@@ -1,0 +1,170 @@
+/* Reset margin dan padding untuk semua elemen */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variabel warna */
+:root {
+    --color-primary: #0FFF84; /* Warna hijau terang */
+    --color-background: #032514; /* Warna latar belakang gelap */
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-background); /* Menggunakan variabel warna */
+    font-family: 'Courier New', Courier, monospace; /* Font modern */
+    color: var(--color-primary); /* Menggunakan variabel warna untuk teks */
+}
+
+header {
+    position: fixed; /* Membuat header tetap di atas saat di-scroll */
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #0FFF84; /* Latar belakang header */
+    color: #032514; /* Warna teks header */
+    padding: 8px; /* Ruang di dalam header */
+    text-align: center; /* Pusatkan teks */
+    z-index: 1000; /* Pastikan header berada di atas konten lainnya */
+}
+
+.container {
+    margin-top: 80px; /* Ruang untuk header tetap */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#canvas-1, 
+#canvas-2, 
+#canvas-3, 
+#canvas-4  {
+	
+    background-color: #fff; 
+    border: 2px solid var(--color-primary); /* Menggunakan variabel warna untuk border */
+    width: 75%;
+    height: auto;
+    margin: 20px 0; 
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Bayangan yang lebih baik */
+    border-radius: 8px; /* Sudut membulat untuk tampilan modern */
+}
+
+input {
+    padding: 10px;
+    margin: 10px 0; /* Jarak atas dan bawah input */
+    width: 100%;
+    max-width: 200px; /* Lebar maksimum input */
+    border: 2px solid var(--color-primary); /* Menggunakan variabel warna untuk border */
+    border-radius: 5px;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+}
+
+.slider-container button {
+   background-color: var(--color-primary); /* Menggunakan variabel warna */
+   color: #032514; /* Warna teks tombol */
+   border: none;
+   padding: 10px;
+   margin-right: 5px; /* Jarak kanan tombol */
+}
+
+.slider-container input[type="range"] {
+   margin-left: 5px; /* Jarak kiri slider */
+}
+
+.output {
+   margin-top: 10px; /* Ruang di atas output ukuran */
+   margin-bottom: 90px; /* Ruang di atas output ukuran */
+}
+
+button {
+   background-color: var(--color-primary); /* Menggunakan variabel warna untuk tombol */
+   color: #032514; /* Warna teks tombol */
+   border-radius :5px ; 
+   border :none ; 
+   padding :10px ; 
+   margin-top :10px ; 
+}
+
+/* Styling untuk download-container dan gambar hasil potongan */
+
+#download-container-1, 
+#download-container-2, 
+#download-container-3, 
+#download-container-4 {
+   display: flex; 
+   flex-wrap: wrap; 
+   justify-content: center; /* Pusatkan gambar dalam kontainer */
+   margin-top: 20px; /* Jarak atas dari kontainer download */
+}
+
+#download-container-1 img, 
+#download-container-2 img, 
+#download-container-3 img, 
+#download-container-4 img{
+   width: 100px; /* Lebar gambar hasil potongan */
+   height: auto; /* Tinggi otomatis untuk menjaga rasio */
+   aspect-ratio: 3 / 4; /* Menetapkan rasio aspek 3:4 */
+   object-fit: cover; /* Memastikan gambar mengisi area tanpa merusak rasio */
+   margin-right: 10px; /* Jarak antar gambar horizontal*/
+   margin-bottom: 10px; /* Jarak bawah gambar vertical*/
+   border-radius: 5px; 
+   border: 2px solid var(--color-primary); /* Border dengan warna dari variabel CSS */ 
+}
+
+
+        .tab { display: none; }
+        .tab.active { display: block; }
+        .tab-links-container {
+            display: flex; /* Menggunakan flexbox untuk tata letak horizontal */
+            justify-content: center; /* Pusatkan konten */
+            padding: 10px; 
+            width: 100%; 
+            position: fixed;
+            bottom: 0; 
+            background-color: #0FFF84; /* Latar belakang */
+        }
+        .tab-links {
+        	color: #032514;
+            cursor: pointer; 
+            padding: 10px; 
+            margin: 0 5px; /* Memberikan sedikit margin antar tab */
+            background: #0FFF84; 
+            border: 1px solid #032514; 
+            border-radius: 5px; /* Memberikan sudut melengkung */
+            transition: background 0.3s; /* Efek transisi */
+        }
+        .tab-links:hover { 
+            background: #032514; 
+        }
+        .tab-links.active {
+            background: #032514; /* Warna tab aktif */
+            font-weight: bold; /* Menebalkan teks tab aktif */
+                  	color: #0FFF84;
+        }
+        .tab-content {
+    padding: 00px;
+    margin-bottom: 00px; /* Memberikan ruang untuk tab yang berada di bawah */
+    display: flex; /* Menggunakan flexbox untuk tata letak */
+    flex-direction: column; /* Mengatur arah kolom */
+    align-items: center; /* Memusatkan elemen secara horizontal */
+    justify-content: center; /* Memusatkan elemen secara vertikal */
+}
+
+
+.flex-center {
+    display: flex; /* Menggunakan flexbox untuk tata letak */
+    flex-direction: column; /* Mengatur arah kolom */
+    align-items: center; /* Memusatkan elemen secara horizontal */
+    justify-content: center; /* Memusatkan elemen secara vertikal */
+}
