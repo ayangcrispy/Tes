@@ -141,6 +141,7 @@ button {
 }
 .tab-links {
 	color: var(--color-background); /* Warna teks tab menggunakan variabel warna*/
+	z-index: 1000; /* Pastikan header berada di atas konten lainnya */
 		cursor:pointer; 
 	padding :10px ; 
 	margin :0 5px ; /* Memberikan sedikit margin antar tab */
