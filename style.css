@@ -1,0 +1,276 @@
+ /* Reset margin dan padding untuk semua elemen */
+ 
+ * {
+ 	margin: 0;
+ 	padding: 0;
+ 	box-sizing: border-box;
+ }
+ /* Variabel warna */
+ 
+ :root {
+ 	--color-primary: #121317;
+ 	/* Warna hijau terang */
+ 	--color-background: #fff;
+ 	/* Warna latar belakang gelap */
+ 	--box-shadow: 0 4px 12px rgba(0, 0, 0, 0.36);
+ }
+ 
+ html,
+ body {
+ 	height: 100%;
+ 	margin: 0;
+ 	display: flex;
+ 	flex-direction: column;
+ 	align-items: center;
+ 	background-color: var(--color-primary);
+ 	/* Menggunakan variabel warna */
+ 	font-family: 'Courier New', Courier, monospace;
+ 	/* Font modern */
+ 	color: var(--color-primary);
+ 	/* Menggunakan variabel warna untuk teks */
+ }
+ 
+ header {
+ 	box-shadow: var(--box-shadow);
+ 	max-width: 600px;
+ 	width: 100%;
+ 	position: fixed;
+ 	/* Membuat header tetap di atas saat di-scroll */
+ 	top: 0;
+ 	background-color: var(--color-primary);
+ 	/* Menggunakan variabel warna untuk latar belakang header */
+ 	color: var(--color-background);
+ 	/* Menggunakan variabel warna untuk teks header */
+ 	padding: 8px;
+ 	/* Ruang di dalam header */
+ 	text-align: center;
+ 	/* Pusatkan teks */
+ 	z-index: 1000;
+ 	/* Pastikan header berada di atas konten lainnya */
+ 	border-radius: 0 0 30px 30px;
+ }
+ 
+ .container {
+ 	margin-top: 00px;
+ 	/* Ruang untuk header tetap */
+ 	display: flex;
+ 	flex-direction: column;
+ 	align-items: center;
+ background-color: var(--color-primary);
+ }
+ 
+ .container1 {
+ 	margin-top: 00px;
+ 	/* Ruang untuk header tetap */
+ 	display: flex;
+ 	flex-direction: column;
+ 	align-items: center;
+ background-color:#fff;
+ }
+ .container2 {
+ 	margin-top: 60px;
+ margin-bottom: 60px;
+ 	/* Ruang untuk header tetap */
+ 	display: flex;
+ 	flex-direction: column;
+ 	align-items: center;
+ background-color:#fff;
+ }
+ 
+ #canvas-1,
+ #canvas-2,
+ #canvas-3,
+ #canvas-4 {
+ 	background-color: #fff;
+ 	border:  0px solid var(--color-primary);
+ 	/* Menggunakan variabel warna untuk border */
+ 	width: 75%;
+ 	height: auto;
+ 	margin: 20px 0;
+ 	cursor: pointer;
+ 	box-shadow: var(--box-shadow);
+ 	/* Bayangan yang lebih baik */
+ 	border-radius: 8px;
+ 	/* Sudut membulat untuk tampilan modern */
+ }
+ 
+ #upload-all {
+ 	
+ 	box-shadow: var(--box-shadow);
+ }
+ 
+ 
+ input {
+ 	
+ 	padding: 10px;
+ 	margin: 20px 0;
+ 	/* Jarak atas dan bawah input */
+ 	width: 100%;
+ 	max-width: 200px;
+ 	/* Lebar maksimum input */
+ 	border: 0px solid var(--color-primary);
+ 	/* Menggunakan variabel warna untuk border */
+ 	border-radius: 8px;
+ 
+ }
+ 
+ .slider-container {
+ 	margin-bottom: 20px;
+ 	text-align: center;
+ 	/* Pusatkan teks */
+ }
+ 
+ #width-slider {
+ 	width: 100%;
+ 	/* Memperpanjang slider untuk memenuhi lebar kontainer */
+ }
+ 
+ .width-value-container {
+ 	margin-top: 0px;
+ 	/* Jarak antara slider dan nilai lebar */
+ }
+ 
+ table {
+ 	width: 100%;
+ 	/* Atur lebar tabel sesuai kontainer */
+ 	max-width: 600px;
+ 	/* Atur lebar maksimum agar tidak terlalu lebar */
+ 	border-collapse: collapse;
+ 	/* Menghilangkan jarak antar border */
+ 	margin: 0 auto;
+ 	/* Pusatkan tabel di halaman */
+ }
+ 
+ th,
+ td {
+ 	padding: 10px;
+ 	text-align: left;
+ 	/* Rata kiri */
+ 	border-bottom: 0px solid #ddd;
+ 	/* Garis bawah pada sel */
+ }
+ 
+ th {
+ 	background-color: #f2f2f2;
+ 	/* Warna latar belakang header */
+ }
+ 
+ button {
+ 	background-color: var(--color-primary);
+ 	/* Menggunakan variabel warna untuk tombol */
+ 	color: var(--color-background);
+ 	/* Menggunakan variabel warna untuk teks tombol */
+ 	border-radius: 8px;
+ 	border: none;
+ 	padding: 100px;
+ 	margin-top: 10px;
+ }
+ /* Styling untuk download-container dan gambar hasil potongan */
+ 
+ #download-container-1,
+ #download-container-2,
+ #download-container-3,
+ #download-container-4 {
+ 	display: flex;
+ 	flex-wrap: wrap;
+ 	justify-content: center;
+ 	/* Pusatkan gambar dalam kontainer */
+ 	margin-top: 20px;
+ 	/* Jarak atas dari kontainer download */
+ }
+ 
+ #download-container-1 img,
+ #download-container-2 img,
+ #download-container-3 img,
+ #download-container-4 img {
+ 	width: 10000px;
+ 	/* Lebar gambar hasil potongan */
+ 	height: auto;
+ 	/* Tinggi otomatis untuk menjaga rasio */
+ 	aspect-ratio: 3 / 4;
+ 	/* Menetapkan rasio aspek 3:4 */
+ 	object-fit: cover;
+ 	/* Memastikan gambar mengisi area tanpa merusak rasio */
+ 	margin-right: 10px;
+ 	/* Jarak antar gambar horizontal*/
+ 	margin-bottom: 10px;
+ 	/* Jarak bawah gambar vertical*/
+ 	border-radius: 8px;
+ 	border: 0px solid var(--color-primary);
+ 	/* Border dengan warna dari variabel CSS */
+ 	box-shadow: var(--box-shadow);
+ }
+ 
+ .tab {
+ 	display: none;
+ }
+ 
+ .tab.active {
+ 	display: block;
+ }
+ 
+ .tab-links-container {
+ 	display: flex;
+ 	justify-content: center;
+ 	/* Pusatkan tab */
+ 	margin: 00px 0;
+ 	/* Jarak atas dan bawah */
+ }
+ 
+ .tab-links {
+ 	box-shadow: var(--box-shadow);
+ 	color: var(--color-background);
+ 	cursor: pointer;
+ 	padding: 10px 20px;
+ 	/* Ruang dalam tab */
+ 	margin: 0 5px;
+ 	/* Jarak antar tab */
+ 	background: var(--color-primary);
+ 	border: 1px solid var(--color-background);
+ 	border-radius: 5px;
+ 	/* Sudut melengkung */
+ 	transition: background .3s;
+ }
+ 
+ .tab-links:hover {
+ 	background: var(--color-background);
+ 	/* Warna untuk tab aktif */
+ 	color: var(--color-primary);
+ 	/* Mengubah warna font menjadi putih */
+ }
+ 
+ .tab-links.active {
+ 	background: var(--color-background);
+ 	/* Warna untuk tab aktif */
+ 	color: var(--color-primary);
+ 	/* Mengubah warna font menjadi putih */
+ }
+ 
+ .flex-center {
+ 	display: flex;
+ 	/* Menggunakan flexbox untuk tata letak */
+ 	flex-direction: column;
+ 	/* Mengatur arah kolom */
+ 	align-items: center;
+ 	/* Memusatkan elemen secara horizontal */
+ 	justify-content: center;
+ 	/* Memusatkan elemen secara vertikal */
+ }
+ 
+.footer {
+    position: fixed; /* Menjaga posisi footer tetap */
+    bottom: 0; /* Jarak 0px dari bawah */
+    left: 0;
+    width: 100%; /* Lebar penuh */
+    background-color: var(--color-primary); /* Warna latar belakang */
+    color: var(--color-background); /* Warna teks */
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.3s ease; /* Transisi halus untuk muncul dan menghilang */
+    transform: translateY(0); /* Mulai dalam keadaan terlihat */
+    z-index: 1000; /* Pastikan footer berada di atas konten lainnya */
+}
+
+.footer.hidden {
+    transform: translateY(100%); /* Sembunyikan footer dengan menggeser ke bawah */
+}
